@@ -1,0 +1,19 @@
+{
+  "name": "support-chat-application",
+  "version": "1.0.0",
+  "description": "Merit support chat application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meritlabs/support-chat-application.git"
+  },
+  "author": "Vladimir Gutorov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meritlabs/support-chat-application/issues"
+  },
+  "homepage": "https://github.com/meritlabs/support-chat-application#readme"
+}
