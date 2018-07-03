@@ -18,6 +18,7 @@
     ]
   },
   "exclude": [
+    "src/chat-form/**",
     "dist",
     "node_modules"
   ]

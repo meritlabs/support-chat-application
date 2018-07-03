@@ -1,7 +1,9 @@
 declare const Vue: any;
 
+import mainView from './common/templates/main-view';
+
 const NotFound = { template: '<p>Page not found</p>' };
-const Home = { template: '<p>home page</p>' };
+const Home = { template: mainView() };
 const About = { template: '<p>about page</p>' };
 const routes = {
   '/get-help/': Home,
