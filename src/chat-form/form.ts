@@ -1,30 +1,17 @@
 declare const Vue: any;
+declare const VueRouter: any;
 
-import mainView from './common/templates/main-view';
+import mainComponent from './components/main/main.component';
 
-const NotFound = { template: '<p>Page not found</p>' };
-const Home = { template: mainView() };
-const About = { template: '<p>about page</p>' };
-const routes = {
-  '/get-help/': Home,
-  '/about': About,
-};
+const routes = [{ path: '/', component: mainComponent() }];
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!',
-    currentRoute: window.location.pathname,
-  },
-
-  computed: {
-    ViewComponent() {
-      console.log(this.currentRoute);
-
-      return routes[this.currentRoute] || NotFound;
-    },
-  },
-  render(h) {
-    return h(this.ViewComponent);
-  },
+const router = new VueRouter({
+  routes,
 });
+
+new Vue({
+  router,
+  data: {
+    message: 'test',
+  },
+}).$mount('#app');
