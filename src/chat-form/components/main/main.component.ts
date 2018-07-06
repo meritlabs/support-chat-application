@@ -15,7 +15,7 @@ export default function mainComponent() {
     methods: {
       sendRequest: function(message) {
         if (message.length > 2) {
-          this.$router.push({ path: '/chat', params: { initMessage: message } });
+          this.$router.push({ path: '/chat', query: { initMessage: message } });
         } else {
           this.isMessageValid = false;
         }

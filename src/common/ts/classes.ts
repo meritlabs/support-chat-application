@@ -20,3 +20,15 @@ export class wsMessage {
     this.message = message;
   }
 }
+
+// Class for new chat form message
+export default class chatMessage {
+  author: string;
+  message: string;
+  timestamp: any;
+  constructor(author: string, message: string) {
+    this.author = author;
+    this.message = message;
+    this.timestamp = new Date();
+  }
+}

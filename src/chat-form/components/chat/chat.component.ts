@@ -1,20 +1,18 @@
 declare const Vue: any;
 import template from './chat.view';
+import chatMessage from '../../../common/ts/classes';
 
 export default function chatComponent() {
   return Vue.extend({
     template: template(),
     data: function() {
-      return {};
+      return {
+        messages: [],
+      };
     },
-    methods: {
-      sendRequest: function(message) {
-        if (message.length > 2) {
-          this.$router.push({ path: '/chat', params: { initMessage: message } });
-        } else {
-          this.isMessageValid = false;
-        }
-      },
+    created: function() {
+      this.messages.push(new chatMessage('current', this.$route.query.initMessage));
     },
+    methods: {},
   });
 }
