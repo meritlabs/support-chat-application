@@ -23,11 +23,11 @@ export class wsMessage {
 
 // Class for new chat form message
 export default class chatMessage {
-  author: string;
+  isClient: boolean;
   message: string;
   timestamp: any;
-  constructor(author: string, message: string) {
-    this.author = author;
+  constructor(isClient: boolean, message: string) {
+    this.isClient = isClient;
     this.message = message;
     this.timestamp = new Date();
   }

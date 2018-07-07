@@ -11,7 +11,8 @@ export default function chatComponent() {
       };
     },
     created: function() {
-      this.messages.push(new chatMessage('current', this.$route.query.initMessage));
+      let initMessage = this.$route.query.initMessage;
+      this.messages.push(new chatMessage(true, initMessage));
     },
     methods: {},
   });

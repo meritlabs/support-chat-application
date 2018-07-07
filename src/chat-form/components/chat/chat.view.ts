@@ -2,7 +2,7 @@ export default function template() {
   return `
   <div class="chatView">
     <div class="messagesWindow">
-      <div v-for="item in messages">
+      <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient }">
         {{item.message}}
       </div>
     </div>
