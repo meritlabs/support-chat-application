@@ -7,6 +7,8 @@ import * as Discord from 'discord.js';
 
 import * as expressService from './services/express.service';
 import * as wsService from './services/websocket.service';
+import * as compileMessage from './services/compile-message.service';
+import * as discordService from './services/discord.service';
 import { chatPair, wsMessage } from './common/ts/classes';
 
 const app = express(),
@@ -53,8 +55,8 @@ wss.on('connection', (ws: WebSocket) => {
     console.log('END__DEBUG__CREATED_CONNECTION___');
   }
   ws.on('message', (message: string) => {
-    if (message.length > 74) {
-      discordService.sendToChannels(discordClient, CHANNELS, compileMessage.inviteRequest(message, connectionID));
+    if (message.length > 2) {
+      discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
     } else {
       if (DEBUG) {
         console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
