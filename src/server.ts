@@ -6,6 +6,7 @@ import * as WebSocket from 'ws';
 import * as Discord from 'discord.js';
 
 import * as expressService from './services/express.service';
+import * as wsService from './services/websocket.service';
 import { chatPair, wsMessage } from './common/ts/classes';
 
 const app = express(),
@@ -31,6 +32,27 @@ expressService.formConfig(app, { wallet: WALLET_APPLICATION, mws: MWS_URL });
 
 // Serve invite application
 app.use(APP_SLUG, express.static('./dist/server/chat-form'));
+
+let fakeId: number = 0;
+let chatPairs: any[];
+let awaitingQueue: any[];
+
+chatPairs = [];
+awaitingQueue = [];
+
+wss.on('connection', (ws: WebSocket) => {
+  let connectionID = wsService.createConnectionID(fakeId++);
+
+  (ws as any).id = connectionID;
+  (ws as any).connected = false;
+  awaitingQueue.push(ws);
+
+  if (DEBUG) {
+    console.log('START__DEBUG__CREATED_CONNECTION___');
+    console.log(awaitingQueue);
+    console.log('END__DEBUG__CREATED_CONNECTION___');
+  }
+});
 
 //run server
 server.listen(PORT, () => {
