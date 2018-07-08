@@ -42,3 +42,10 @@ export async function destroyPair(chatPairs: any[], id: any) {
 export function isConnectionBusy(pairs, id) {
   return pairs.find((item: any) => item.wsUser === id);
 }
+
+// function for defining application host
+export function getHost() {
+  let host = `wss://${window.location.host}/`;
+  if (/^localhost/.test(window.location.host)) host = `ws://${window.location.host}/`;
+  return host;
+}

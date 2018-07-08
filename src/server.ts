@@ -52,6 +52,15 @@ wss.on('connection', (ws: WebSocket) => {
     console.log(awaitingQueue);
     console.log('END__DEBUG__CREATED_CONNECTION___');
   }
+  ws.on('message', (message: string) => {
+    if (message.length > 74) {
+      discordService.sendToChannels(discordClient, CHANNELS, compileMessage.inviteRequest(message, connectionID));
+    } else {
+      if (DEBUG) {
+        console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
+      }
+    }
+  });
 });
 
 //run server
