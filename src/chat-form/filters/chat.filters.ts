@@ -1,9 +1,13 @@
 declare const Vue: any;
 
 Vue.filter('toMinutes', function(value) {
-  return Math.floor(value / 1000 / 60 % 60);
+  let num: any = Math.floor(value / 1000 / 60 % 60);
+  if (num < 10) num = `0${num}`;
+  return num;
 });
 
 Vue.filter('toSeconds', function(value) {
-  return Math.floor(value / 1000 % 60);
+  let num: any = Math.floor(value / 1000 % 60);
+  if (num < 10) num = `0${num}`;
+  return num;
 });
