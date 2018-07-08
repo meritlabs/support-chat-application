@@ -26,9 +26,11 @@ export default class chatMessage {
   isClient: boolean;
   message: string;
   timestamp: any;
-  constructor(isClient: boolean, message: string) {
+  type: string;
+  constructor(isClient: boolean, message: string, type: string) {
     this.isClient = isClient;
     this.message = message;
+    this.type = type;
     this.timestamp = new Date();
   }
 }

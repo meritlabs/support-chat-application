@@ -15,11 +15,21 @@ export default function chatComponent() {
     created: function() {
       let initMessage = this.$route.query.initMessage;
       let socket = this.socket;
+      let _this = this;
       socket.onopen = function() {
         socket.send(initMessage);
+        _this.messages.push(new chatMessage(true, initMessage, 'regular'));
+        _this.messages.push(new chatMessage(true, '', 'countdown'));
+        _this.startCountDown();
       };
-
-      this.messages.push(new chatMessage(true, initMessage));
+    },
+    methods: {
+      startCountDown: function() {
+        setInterval(this.updateTimer, 1000);
+      },
+      updateTimer: function() {
+        console.log(1);
+      },
     },
   });
 }

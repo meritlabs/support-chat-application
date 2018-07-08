@@ -4,6 +4,9 @@ export default function template() {
     <div class="messagesWindow">
       <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient }">
         {{item.message}}
+        <div v-if="item.type === 'countdown'">
+          COUNTDOWN STARTED
+        </div>
       </div>
     </div>
     <div class="inputBox">
