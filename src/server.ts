@@ -42,6 +42,12 @@ let awaitingQueue: any[];
 chatPairs = [];
 awaitingQueue = [];
 
+//run server
+server.listen(PORT, () => {
+  console.log(`Server started on port ${(server.address() as any).port}`);
+});
+
+// Create new WS connection
 wss.on('connection', (ws: WebSocket) => {
   let connectionID = wsService.createConnectionID(fakeId++);
 
@@ -63,9 +69,4 @@ wss.on('connection', (ws: WebSocket) => {
       }
     }
   });
-});
-
-//run server
-server.listen(PORT, () => {
-  console.log(`Server started on port ${(server.address() as any).port}`);
 });
