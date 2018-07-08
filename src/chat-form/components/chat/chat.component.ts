@@ -10,6 +10,7 @@ export default function chatComponent() {
       return {
         messages: [],
         socket: new WebSocket(wsService.getHost()),
+        interval: '',
         countdown: 15 * 60 * 1000, // in milliseconds
       };
     },
@@ -20,13 +21,16 @@ export default function chatComponent() {
       socket.onopen = function() {
         socket.send(initMessage);
         _this.messages.push(new chatMessage(true, initMessage, 'regular'));
-        _this.messages.push(new chatMessage(true, '', 'countdown'));
+        _this.messages.push(new chatMessage(false, '', 'countdown'));
         _this.startCountDown();
       };
     },
     methods: {
       startCountDown: function() {
-        setInterval(this.updateTimer, 1000);
+        this.interval = setInterval(this.updateTimer, 1000);
+      },
+      stopInterval: function() {
+        clearInterval(this.interval);
       },
       updateTimer: function() {
         this.countdown -= 1000;
