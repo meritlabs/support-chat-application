@@ -5,7 +5,8 @@ export default function template() {
       <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient }">
         {{item.message}}
         <div v-if="item.type === 'countdown'">
-          COUNTDOWN STARTED
+          {{countdown | toMinutes}}
+          {{countdown | toSeconds}}
         </div>
       </div>
     </div>

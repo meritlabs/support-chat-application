@@ -1,6 +1,8 @@
 declare const Vue: any;
 declare const VueRouter: any;
 
+require('./filters/chat.filters');
+
 import mainComponent from './components/main/main.component';
 import chatComponent from './components/chat/chat.component';
 

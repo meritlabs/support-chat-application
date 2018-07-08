@@ -10,6 +10,7 @@ export default function chatComponent() {
       return {
         messages: [],
         socket: new WebSocket(wsService.getHost()),
+        countdown: 15 * 60 * 1000, // in milliseconds
       };
     },
     created: function() {
@@ -28,7 +29,7 @@ export default function chatComponent() {
         setInterval(this.updateTimer, 1000);
       },
       updateTimer: function() {
-        console.log(1);
+        this.countdown -= 1000;
       },
     },
   });
