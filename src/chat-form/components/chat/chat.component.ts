@@ -24,6 +24,7 @@ export default function chatComponent() {
         _this.messages.push(new chatMessage(false, '', 'countdown'));
         _this.startCountDown();
       };
+      setInterval(this.keepSocketAwake, 2000);
     },
     methods: {
       startCountDown: function() {
@@ -34,6 +35,9 @@ export default function chatComponent() {
       },
       updateTimer: function() {
         this.countdown -= 1000;
+      },
+      keepSocketAwake: function() {
+        this.socket.send('');
       },
     },
   });
