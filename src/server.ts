@@ -20,7 +20,7 @@ const app = express(),
   BOT_TOKEN = process.env.BOT_TOKEN || '',
   APP_SLUG = process.env.APP_SLUG || ['/get-help/'],
   PORT = process.env.PORT || 8999,
-  DEBUG = process.env.DEBUG || true,
+  DEBUG = process.env.DEBUG || false,
   WALLET_APPLICATION = process.env.WALLET_APPLICATION || 'https://testnet.wallet.merit.me/',
   MWS_URL = process.env.MWS_URL || 'https://testnet.mws.merit.me/bws/api/v1/';
 
@@ -62,12 +62,15 @@ wss.on('connection', (ws: WebSocket) => {
     console.log('END__DEBUG__CREATED_CONNECTION___');
   }
   ws.on('message', (message: string) => {
-    if (message.length > 2) {
+    let pair = wsService.checkPair(chatPairs, connectionID);
+    let discordUser = (ws as any).discordUser;
+
+    if (pair && discordUser && message.length > 2) {
+      discordUser.send(message);
+    } else if (!pair && message.length === 0) {
       discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
-    } else {
-      if (DEBUG) {
-        console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
-      }
+    } else if (DEBUG && connectionID) {
+      console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
     }
   });
 });
