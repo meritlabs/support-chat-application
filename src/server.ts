@@ -135,8 +135,12 @@ discordClient.on('message', (message: any) => {
         }
         break;
       case messageTypes.regularMessage:
-        console.log('regular message');
+        (() => {
+          let connection = wsService.getConnection(awaitingQueue, pair.get('wsUser'));
+          let message = JSON.stringify(new wsMessage(discordUser, _message));
 
+          if (connection) connection.send(message);
+        })();
         break;
       case messageTypes.inPair:
         message.author.send(compileMessage.alreadyInPair(pair.get('wsUser')));
