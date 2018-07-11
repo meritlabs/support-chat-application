@@ -10,6 +10,7 @@ import * as wsService from './services/websocket.service';
 import * as compileMessage from './services/compile-message.service';
 import * as discordService from './services/discord.service';
 import { chatPair, wsMessage } from './common/ts/classes';
+import { messageTypes, strings } from './common/ts/const';
 
 const app = express(),
   server = http.createServer(app),
@@ -69,4 +70,93 @@ wss.on('connection', (ws: WebSocket) => {
       }
     }
   });
+});
+
+discordClient.on('message', (message: any) => {
+  if (DEBUG) {
+    console.log('START__DEBUG__PRESENT_CONNECTIONS___');
+    console.log(awaitingQueue);
+    console.log('END__DEBUG__PRESENT_CONNECTIONS___');
+  }
+
+  let type: string = message.channel.type;
+  let _message: string = message.content;
+  let isBot = message.author.bot;
+
+  if (type === 'dm' && !isBot) {
+    let discordUser: any = message.channel.recipient.username;
+    let pair = wsService.checkPair(chatPairs, discordUser);
+    let isCommand = discordService.detectCommand(_message);
+    let detectedMessageType = discordService.detectMessageType(pair, isCommand, isBot);
+
+    if (DEBUG) {
+      console.log('START___DEBUG___PAIR___');
+      console.log(pair);
+      console.log('END___DEBUG___PAIR___');
+    }
+
+    switch (detectedMessageType) {
+      case messageTypes.joinToPair:
+        let connectionID = wsService.parseConnection(_message);
+        let connection = wsService.getConnection(awaitingQueue, connectionID);
+        let unableToConnectMessage = compileMessage.unableToConnect();
+        let isConnectionBusy;
+
+        if (connection) isConnectionBusy = wsService.isConnectionBusy(chatPairs, connection.id);
+
+        if (DEBUG) {
+          console.log('START___IS_CONNECTION_BUSY___');
+          console.log(isConnectionBusy);
+          console.log('END___IS_CONNECTION_BUSY___');
+        }
+
+        if (connection && !connection.connected && !isConnectionBusy) {
+          connection.discordUser = message.author; //attach Discord user to the new connection pair
+          connection.connected = true;
+
+          let newPair = new chatPair(discordUser, connection.id);
+
+          let discordUserJoinedMessage = JSON.stringify(new wsMessage(discordUser, strings.joined));
+          let successfulConnectedToClientMessage = compileMessage.connectedToClient(connection.id);
+          let clientTakenMessage = compileMessage.requestTaken(connection.id, discordUser);
+
+          chatPairs.push(newPair); // Add created pair to WS
+
+          connection.send(discordUserJoinedMessage); // Send connection message to the Application client
+          message.author.send(successfulConnectedToClientMessage); // Reply to author that he's successfully connected to the application client
+          discordService.sendToChannels(discordClient, CHANNELS, clientTakenMessage); // Notify community that somebody from the community already connected to the existing application client
+        } else {
+          message.author.send(unableToConnectMessage); // Notify Discord user that He's can't connect to the current Application client
+        }
+        break;
+      case messageTypes.regularMessage:
+        console.log('regular message');
+
+        break;
+      case messageTypes.inPair:
+        message.author.send(compileMessage.alreadyInPair(pair.get('wsUser')));
+        break;
+      case messageTypes.destroyPair:
+        if (pair) {
+          (async () => {
+            chatPairs = (await wsService.destroyPair(chatPairs, pair.discordUser)) as any[];
+            message.author.send(compileMessage.pairDestroyed());
+          })();
+        } else {
+          message.author.send(compileMessage.noActiveConnections());
+        }
+        break;
+      case messageTypes.botHelp:
+        message.author.send(compileMessage.getHelp()); // Post to Discord user help message
+        break;
+      case messageTypes.howToUse:
+        message.author.send(compileMessage.howToUse()); // Post to Discord user how to use message
+        break;
+      case messageTypes.default:
+        message.author.send(compileMessage.defaultException()); // Post to Discord user default exception
+        break;
+      default:
+        break;
+    }
+  }
 });

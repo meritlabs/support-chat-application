@@ -24,7 +24,7 @@ export async function sendToChannels(client: any, channels: any, message: string
 // Function for defining BOT commands
 export function detectCommand(message) {
   let type: string = commands.regular;
-  if (/^send invite to: #/.test(message)) return (type = commands.activate);
+  if (/^help to: #/.test(message)) return (type = commands.activate);
   if (/^#stop/.test(message)) return (type = commands.deactivate);
   if (/^#help/.test(message)) return (type = commands.help);
   if (/^#how-it-works/.test(message)) return (type = commands.howToUse);

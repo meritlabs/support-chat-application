@@ -16,14 +16,6 @@ export enum commands {
   howToUse = 'how-to-use',
 }
 
-export enum validationStatuses {
-  valid = 'valid',
-  notExist = 'not exist',
-  notValid = 'not valid',
-  notBeaconed = 'not beaconed',
-  notConfirmed = 'not confirmed',
-}
-
 export enum strings {
   channelNotSetup = 'PLEASE SETUP CHANNELS',
   joined = 'joined',

@@ -19,7 +19,7 @@ export function checkPair(chatPairs, user) {
 // Function for executing connected client ID
 export function parseConnection(message: string) {
   let connectionID = message.toString().split('@')[0];
-  return connectionID.split('send invite to: ')[1];
+  return connectionID.split('help to: ')[1];
 }
 
 // Function for creating connected client ID
