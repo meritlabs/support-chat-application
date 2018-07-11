@@ -1,13 +1,7 @@
 const webpack = require('webpack'),
   path = require('path'),
   tsLoader = require('ts-loader'),
-  autoprefixer = require('autoprefixer'),
-  FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin'),
-  OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-  CopyWebpackPlugin = require('copy-webpack-plugin'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  ImageminPlugin = require('imagemin-webpack-plugin').default;
+  FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 module.exports = {
   devtool: 'inline-source-map',
   entry: './src/chat-form/form.ts',
@@ -22,6 +16,11 @@ module.exports = {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
       { test: /\.tsx?$/, loader: 'ts-loader' },
+      {
+        test: /\.html$/,
+        exclude: /node_modules/,
+        loader: 'html-loader?exportAsEs6Default',
+      },
     ],
   },
   node: {

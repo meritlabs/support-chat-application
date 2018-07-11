@@ -1,9 +1,9 @@
 declare const Vue: any;
-import template from './main.view';
+const template = require('./main.view.html');
 
 export default function mainComponent() {
   return Vue.extend({
-    template: template(),
+    template: template.default,
     data: function() {
       return {
         title: `Welcome to merit support!`,

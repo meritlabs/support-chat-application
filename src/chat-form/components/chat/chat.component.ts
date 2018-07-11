@@ -1,11 +1,11 @@
 declare const Vue: any;
-import template from './chat.view';
+const template = require('./chat.view.html');
 import chatMessage from '../../../common/ts/classes';
 import * as wsService from '../../../services/websocket.service';
 
 export default function chatComponent() {
   return Vue.extend({
-    template: template(),
+    template: template.default,
     data: function() {
       return {
         messages: [],
@@ -25,12 +25,23 @@ export default function chatComponent() {
         _this.startCountDown();
       };
       setInterval(this.keepSocketAwake, 2000);
+      socket.onmessage = function(event) {
+        let data = JSON.parse(event.data);
+        let author = data.author;
+        let message = data.message;
+        _this.stopCountDown();
+        if (message === 'joined') {
+          _this.messages.push(new chatMessage(false, `@${author}`, 'joined'));
+        } else {
+          _this.messages.push(new chatMessage(false, `@${author}: ${message}`, 'regular'));
+        }
+      };
     },
     methods: {
       startCountDown: function() {
         this.interval = setInterval(this.updateTimer, 1000);
       },
-      stopInterval: function() {
+      stopCountDown: function() {
         clearInterval(this.interval);
       },
       updateTimer: function() {
