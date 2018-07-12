@@ -1,5 +1,5 @@
 <div class="chatView">
-  <div class="messagesWindow">
+  <div class="messagesWindow" v-chat-scroll="{always: false, smooth: true}">
     <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient }">
       <small>{{item.timestamp | getTime}}</small>
       <br>
