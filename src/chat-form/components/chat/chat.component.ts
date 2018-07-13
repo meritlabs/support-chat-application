@@ -2,7 +2,7 @@ declare const Vue: any;
 const template = require('./chat.view.html');
 import chatMessage from '../../../common/ts/classes';
 import * as wsService from '../../../services/websocket.service';
-import { callbackify } from 'util';
+import * as chatService from '../../services/chat.service';
 
 export default {
   template: template.default,
@@ -20,13 +20,26 @@ export default {
     let initMessage = this.$route.query.initMessage;
     let socket = this.socket;
     let _this = this;
-    socket.onopen = function() {
-      socket.send(initMessage);
-      _this.messages.push(new chatMessage(true, initMessage, 'regular'));
-      _this.messages.push(new chatMessage(false, '', 'countdown'));
-      _this.startCountDown();
-    };
-    setInterval(this.keepSocketAwake, 2000);
+
+    this.$router.replace('/chat'); // remove query params
+
+    switch (chatService.validateInitMessage(initMessage)) {
+      case 'valid':
+        socket.onopen = function() {
+          socket.send(initMessage);
+          _this.messages.push(new chatMessage(true, initMessage, 'regular'));
+          _this.messages.push(new chatMessage(false, '', 'countdown'));
+          _this.startCountDown();
+        };
+        setInterval(this.keepSocketAwake, 2000);
+        break;
+      case 'empty':
+        this.$router.replace('/');
+        break;
+      default:
+        break;
+    }
+
     socket.onmessage = function(event) {
       let data = JSON.parse(event.data);
       let author = data.author;
