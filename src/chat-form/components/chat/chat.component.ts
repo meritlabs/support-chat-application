@@ -13,6 +13,7 @@ export default {
       interval: '',
       countdown: 15 * 60 * 1000, // in milliseconds
       clientMessage: '',
+      isJoined: false,
     };
   },
   created: function() {
@@ -33,6 +34,7 @@ export default {
       _this.stopCountDown();
       if (message === 'joined') {
         _this.messages.push(new chatMessage(false, `@${author}`, 'joined'));
+        _this.isJoined = true;
       } else {
         _this.messages.push(new chatMessage(false, `@${author}: ${message}`, 'regular'));
       }
