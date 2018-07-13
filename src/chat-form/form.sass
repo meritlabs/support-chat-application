@@ -113,6 +113,8 @@ body, html
     padding: 4px 10px 5px
 .messagesWindow
   .message
+    width: 100%
+  .message_innerWrap
     width: initial
     display: inline-block
     padding: 6px 10px 7px
@@ -122,7 +124,7 @@ body, html
     margin-bottom: 15px
     position: relative
     color: $WHITE
-    &:after
+    &:before
       content: ""
       display: block
       position: absolute
@@ -136,7 +138,7 @@ body, html
       text-align: right
       background: $LIGHT_BLUE
       color: $EBONY_CLAY
-      &:after
+      &:before
         left: initial
         right: -3px
         transform: skew(49deg)
