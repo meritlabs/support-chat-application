@@ -1,7 +1,7 @@
 <div class="chatView">
   <div class="messagesWindow" v-chat-scroll="{always: false, smooth: true}">
-    <div v-for="item in messages" class="message">
-      <div class="message_innerWrap" v-bind:class="{ client: item.isClient }">
+    <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient }">
+      <div class="message_innerWrap">
         <small>{{item.timestamp | getTime}}</small>
         <br>
         <br>
@@ -32,8 +32,8 @@
     </div>
   </div>
   <div class="inputBox">
-    <textarea placeholder="Enter your message..."></textarea>
-    <button>
+    <textarea placeholder="Enter your message..." v-model="clientMessage"></textarea>
+    <button v-on:click="sendMessage(clientMessage)">
       Send
     </button>
   </div>

@@ -2,6 +2,7 @@ declare const Vue: any;
 const template = require('./chat.view.html');
 import chatMessage from '../../../common/ts/classes';
 import * as wsService from '../../../services/websocket.service';
+import { callbackify } from 'util';
 
 export default {
   template: template.default,
@@ -11,6 +12,7 @@ export default {
       socket: new WebSocket(wsService.getHost()),
       interval: '',
       countdown: 15 * 60 * 1000, // in milliseconds
+      clientMessage: '',
     };
   },
   created: function() {
@@ -48,6 +50,11 @@ export default {
     },
     keepSocketAwake: function() {
       this.socket.send('');
+    },
+    sendMessage: function(message) {
+      this.socket.send(message);
+      this.messages.push(new chatMessage(true, message, 'regular'));
+      this.clientMessage = '';
     },
   },
 };

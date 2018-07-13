@@ -114,6 +114,17 @@ body, html
 .messagesWindow
   .message
     width: 100%
+    &.client
+      text-align: right
+      .message_innerWrap
+        text-align: right
+        background: $LIGHT_BLUE
+        color: $EBONY_CLAY
+        &:before
+          left: initial
+          right: -3px
+          transform: skew(49deg)
+          background: $LIGHT_BLUE
   .message_innerWrap
     width: initial
     display: inline-block
@@ -134,17 +145,8 @@ body, html
       height: 7px
       background: $DODGER_BLUE
       transform: skew(-49deg)
-    &.client
-      text-align: right
-      background: $LIGHT_BLUE
-      color: $EBONY_CLAY
-      &:before
-        left: initial
-        right: -3px
-        transform: skew(49deg)
-        background: $LIGHT_BLUE
-    .countdown
-      padding: 15px 0
-      display: flex
-      font-size: 24px
-      font-weight: 600
+  .countdown
+    padding: 15px 0
+    display: flex
+    font-size: 24px
+    font-weight: 600
