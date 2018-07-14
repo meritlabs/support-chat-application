@@ -15,24 +15,22 @@ export function helpRequest(message: string, connectionID: string) {
 
 //This is sent to the INVITER via DM
 export function connectedToClient(id: string) {
-  return `You are inviting a new user with ID: \`${id}\`
-  \n*I am about to share your invite code with the user
-  \nIf you don't want to share your invite, tell me to \`#stop\`
-  \nNeed help? Ask me \`#how-it-works\`*
-  \n**If you are ready to proceed, type your invite code (alias) now!  (Omit the @ symbol.)**`;
+  return `You are helping to user with ID: \`${id}\`
+  \nIf you don't want to continue help, tell me to \`#stop\`
+  \nNeed help? Ask me \`#how-it-works\``;
 }
 
 // Sent to the INVITER if there is an error
 export function unableToConnect() {
-  return `Sorry!  It seems there was a problem with inviting this new user.  It is most likely for one of the reasons below:
-  \n 1) Invalid format.  Please check the connection ID you entered, and be sure it is in this format: \`send invite to: #0-0000000000000@\`
-  \n 2) Already-in-progress.  Somebody from the community already invited this user.
-  \n 3) The user changed their mind.  They closed the application process window before we could invite them.`;
+  return `Sorry!  It seems there was a problem with connecting this user.  It is most likely for one of the reasons below:
+  \n 1) Invalid format.  Please check the connection ID you entered, and be sure it is in this format: \`help to: #0-0000000000000@\`
+  \n 2) Already-in-progress.  Somebody from the community already helping this user.
+  \n 3) The user changed their mind.  They closed the application process window before we could help them.`;
 }
 
 // Sent to the public channel when the APPLICANT has been approved.
 export function requestTaken(id: string, discordUser: string) {
-  return `Woooh!  User ${id} is now part of the Merit community, and has been invited by **@${discordUser}**!
+  return `Woooh!  User ${id} is getting help from the Merit community! Thank you, **@${discordUser}**!
   \n----------------------------------------------------
   \n
   \n`;
@@ -40,22 +38,22 @@ export function requestTaken(id: string, discordUser: string) {
 
 // Sent to the INVITER in DM if they are duplicating connections.
 export function alreadyInPair(id: string) {
-  return `Oops, it looks like you are already-in-progress with inviting a new user (\`${id}\`). \n Please type \`#stop\` if you want to stop that invitation process.`;
+  return `Oops, it looks like you are already-in-progress with helping to the user (\`${id}\`). \n Please type \`#stop\` if you want to stop that process.`;
 }
 
 // Sent to the INVITER once closed.
 export function pairDestroyed() {
-  return 'Your invitation process has been cancelled.  You are now free to invite someone new!';
+  return 'Your helping process has been cancelled.  You are now free to help someone new!';
 }
 
 // If you are not inviting new users right now.
 export function noActiveConnections() {
-  return 'You are not currently inviting any new users.';
+  return 'You are not currently helping any users.';
 }
 
 // With the inviter, via DM
 export function getHelp() {
-  return `***MERIT INVITE BOT**\n*The Merit Invite Bot aims to connect new users to existing members of the community.
+  return `***MERIT HELP BOT**\n*The Merit Help Bot aims to connect new users to existing members of the community.
   \nYou can share your invite code via a direct message (DM) to the BOT. You can use the following list of commands:*
   \n1) Provide the new user with your invite code: \`send invite to: #0-0000000000000@\`
   \n2) You cannot invite 2 new users at the same time. To cancel your existing invitation process please type: \`#stop\`
