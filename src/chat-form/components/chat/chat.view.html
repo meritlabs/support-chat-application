@@ -2,9 +2,7 @@
   <div class="messagesWindow" v-chat-scroll="{always: false, smooth: true}">
     <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient, expired: item.type === 'expired'}">
       <div class="message_innerWrap">
-        <small>{{item.timestamp | getTime}}</small>
-        <br>
-        <br>
+        <div class="date">{{item.timestamp | getTime}}</div>
         <div v-if="item.type === 'regular'">
           {{item.message}}
         </div>
