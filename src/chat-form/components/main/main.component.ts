@@ -11,6 +11,13 @@ export default {
       isMessageValid: true,
     };
   },
+  created: function() {
+    let restartMessage = this.$route.query.restartMessage;
+    if (restartMessage) {
+      this.initMessage = restartMessage;
+      this.$router.replace('/'); // remove query params
+    }
+  },
   methods: {
     sendRequest: function(message) {
       if (message.length > 2) {

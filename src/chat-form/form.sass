@@ -131,6 +131,11 @@ body, html
           right: -3px
           transform: skew(49deg)
           background: $LIGHT_BLUE
+    &.expired .message_innerWrap
+      background: $SUNSET_ORANGE
+      color: $WHITE
+      &:before
+        background: $SUNSET_ORANGE
   .message_innerWrap
     width: initial
     display: inline-block

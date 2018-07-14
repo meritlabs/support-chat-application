@@ -1,6 +1,6 @@
 <div class="chatView">
   <div class="messagesWindow" v-chat-scroll="{always: false, smooth: true}">
-    <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient }">
+    <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient, expired: item.type === 'expired'}">
       <div class="message_innerWrap">
         <small>{{item.timestamp | getTime}}</small>
         <br>
@@ -27,6 +27,11 @@
         </div>
         <div v-if="item.type === 'joined'">
           {{item.message}} from Discord community, joined to help you!
+        </div>
+        <div v-if="item.type === 'expired'">
+          <p>{{item.message}}</p>
+          <br>
+          <button v-on:click="restartApplication()">Ask again</button>
         </div>
       </div>
     </div>

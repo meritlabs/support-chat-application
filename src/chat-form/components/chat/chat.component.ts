@@ -11,8 +11,9 @@ export default {
       messages: [],
       socket: new WebSocket(wsService.getHost()),
       interval: '',
-      countdown: 15 * 60 * 1000, // in milliseconds
+      countdown: 0.1 * 60 * 1000, // in milliseconds
       clientMessage: '',
+      initMessage: '',
       isJoined: false,
     };
   },
@@ -27,6 +28,7 @@ export default {
       case 'valid':
         socket.onopen = function() {
           socket.send(initMessage);
+          _this.initMessage = initMessage;
           _this.messages.push(new chatMessage(true, initMessage, 'regular'));
           _this.messages.push(new chatMessage(false, '', 'countdown'));
           _this.startCountDown();
@@ -61,7 +63,18 @@ export default {
       clearInterval(this.interval);
     },
     updateTimer: function() {
-      this.countdown -= 1000;
+      let countdown = (this.countdown -= 1000);
+      if (countdown > 0) {
+        this.countdown = countdown;
+      } else {
+        this.sessionExpired();
+      }
+    },
+    sessionExpired: function() {
+      let message = `Sorry, your request session expired`;
+
+      this.stopCountDown();
+      this.messages.push(new chatMessage(false, message, 'expired'));
     },
     keepSocketAwake: function() {
       this.socket.send('');
@@ -70,6 +83,9 @@ export default {
       this.socket.send(message);
       this.messages.push(new chatMessage(true, message, 'regular'));
       this.clientMessage = '';
+    },
+    restartApplication: function() {
+      this.$router.push({ path: '/', query: { restartMessage: this.initMessage } });
     },
   },
 };
