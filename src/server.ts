@@ -125,8 +125,6 @@ discordClient.on('message', (message: any) => {
 
           chatPairs.push(newPair); // Add created pair to WS
 
-          console.log(discordUserJoinedMessage);
-
           connection.send(discordUserJoinedMessage); // Send connection message to the Application client
           message.author.send(successfulConnectedToClientMessage); // Reply to author that he's successfully connected to the application client
           discordService.sendToChannels(discordClient, CHANNELS, clientTakenMessage); // Notify community that somebody from the community already connected to the existing application client

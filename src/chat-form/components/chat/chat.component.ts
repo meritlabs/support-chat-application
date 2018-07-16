@@ -11,7 +11,7 @@ export default {
       messages: [],
       socket: new WebSocket(wsService.getHost()),
       interval: '',
-      countdown: 0.1 * 60 * 1000, // in milliseconds
+      countdown: 15 * 60 * 1000, // in milliseconds
       clientMessage: '',
       initMessage: '',
       isJoined: false,
