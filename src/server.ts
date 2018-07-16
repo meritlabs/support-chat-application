@@ -73,6 +73,17 @@ wss.on('connection', (ws: WebSocket) => {
       console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
     }
   });
+  ws.on('close', function(connection) {
+    let pair = wsService.checkPair(chatPairs, connectionID);
+    let discordUser = (ws as any).discordUser;
+
+    if (pair && discordUser) {
+      (async () => {
+        chatPairs = (await wsService.destroyPair(chatPairs, pair.discordUser)) as any[];
+        discordUser.send(compileMessage.pairDestroyed());
+      })();
+    }
+  });
 });
 
 discordClient.on('message', (message: any) => {
