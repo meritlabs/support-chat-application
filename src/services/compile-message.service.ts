@@ -15,7 +15,7 @@ export function helpRequest(message: string, connectionID: string) {
 
 //This is sent to the USER via DM, regular message
 export function regularMessage(user: string, message: string) {
-  return `*USER: ${user}*\n\`\`\`${message} \`\`\``;
+  return `*USER: ${user}* \n\n${message}\n----------------------------------------------------`;
 }
 
 //This is sent to the USER via DM, exception message

@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="inputBox">
-    <textarea placeholder="Enter your message..." v-model="clientMessage" v-bind:disabled="!isJoined ? true : false"></textarea>
+    <textarea placeholder="Enter your message..." @keyup.enter.exact="sendMessage(clientMessage)" v-model="clientMessage" v-bind:disabled="!isJoined ? true : false"></textarea>
     <button v-on:click="sendMessage(clientMessage)" v-bind:disabled="!isJoined ? true : false">
       Send
     </button>

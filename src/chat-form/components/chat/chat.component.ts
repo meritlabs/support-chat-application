@@ -80,9 +80,11 @@ export default {
       this.socket.send('');
     },
     sendMessage: function(message) {
-      this.socket.send(message);
-      this.messages.push(new chatMessage(true, message, 'regular'));
-      this.clientMessage = '';
+      if (message.length > 0) {
+        this.socket.send(message);
+        this.messages.push(new chatMessage(true, message, 'regular'));
+        this.clientMessage = '';
+      }
     },
     restartApplication: function() {
       this.$router.push({ path: '/', query: { restartMessage: this.initMessage } });
