@@ -13,7 +13,12 @@ export function helpRequest(message: string, connectionID: string) {
   \n----------------------------------------------------`;
 }
 
-//This is sent to the USER via DM
+//This is sent to the USER via DM, regular message
+export function regularMessage(user: string, message: string) {
+  return `*USER: ${user}*\n\`\`\`${message} \`\`\``;
+}
+
+//This is sent to the USER via DM, exception message
 export function connectedToClient(id: string) {
   return `You are helping to user with ID: \`${id}\`
   \nIf you don't want to continue help, tell me to \`#stop\`

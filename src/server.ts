@@ -65,10 +65,13 @@ wss.on('connection', (ws: WebSocket) => {
     let pair = wsService.checkPair(chatPairs, connectionID);
     let discordUser = (ws as any).discordUser;
 
-    if (pair && discordUser && message.length > 2) {
-      discordUser.send(message);
+    if (pair && discordUser && message.length > 0) {
+      console.log(compileMessage.regularMessage(pair.get('wsUser'), message));
+
+      discordUser.send(compileMessage.regularMessage(pair.get('wsUser'), message));
     } else if (!pair && message.length > 2) {
-      discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
+      // discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
+      console.log(compileMessage.helpRequest(message, connectionID));
     } else if (DEBUG && connectionID) {
       console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
     }
