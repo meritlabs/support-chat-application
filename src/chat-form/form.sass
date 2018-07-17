@@ -117,6 +117,12 @@ body, html
     &:disabled
       opacity: .4
       cursor: not-allowed
+  .description
+    position: absolute
+    bottom: 7px
+    left: 10px
+    font-size: 11px
+    opacity: .4
 .messagesWindow
   .message
     width: 100%
@@ -134,7 +140,7 @@ body, html
           right: -3px
           transform: skew(49deg)
           background: $WHITE
-    &.joined .message_innerWrap
+    &.success .message_innerWrap
       color: $DODGER_BLUE
     &.error .message_innerWrap
       color: $SUNSET_ORANGE
@@ -184,3 +190,33 @@ body, html
     font-size: 24px
     font-weight: 600
     color: $DODGER_BLUE
+
+.chatView .navigation
+  text-align: center
+  text-decoration: underline
+  color: $JADE
+  cursor: pointer
+  padding-top: 15px
+
+.rateNavigation
+  width: calc(100% + 8px)
+  position: relative
+  left: -4px
+  display: flex
+  justify-content: space-between
+  padding-top: 15px
+  button
+    border-radius: 4px
+    border: 0
+    color: $WHITE
+    font-size: 13px
+    line-height: 13px
+    padding: 5px
+    margin: 4px
+    text-align: center
+    &.good
+      background: $JADE
+    &.fine
+      background: $DODGER_BLUE
+    &.bad
+      background: $SUNSET_ORANGE

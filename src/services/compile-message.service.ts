@@ -51,6 +51,10 @@ export function pairDestroyed() {
   return 'Your helping process has been cancelled.  You are now free to help someone new!';
 }
 
+export function thanksForHelp() {
+  return 'Thank You for help!\nYou are now free to help someone new!';
+}
+
 // Discord user disconnected
 export function disconnected() {
   return 'Helping process has been cancelled, application disconnected!';

@@ -15,6 +15,8 @@ export default {
       clientMessage: '',
       initMessage: '',
       isJoined: false,
+      isThanksEnabled: true,
+      isNotRated: true,
     };
   },
   created: function() {
@@ -48,7 +50,9 @@ export default {
       let message = data.message;
       _this.stopCountDown();
       if (message === 'joined') {
-        _this.messages.push(new chatMessage(false, `@${author}`, 'joined'));
+        _this.messages.push(
+          new chatMessage(false, `<strong>@${author}</strong> from Discord community, joined to help you!`, 'success')
+        );
         _this.isJoined = true;
       } else {
         if (author !== 'ERROR') {
@@ -95,6 +99,26 @@ export default {
     },
     restartApplication: function() {
       this.$router.push({ path: '/', query: { restartMessage: this.initMessage } });
+    },
+    finishChat: function() {
+      this.isJoined = false;
+      this.isThanksEnabled = false;
+      this.messages.push(new chatMessage(false, ``, 'rateHelp'));
+    },
+    rateHelp: function(val) {
+      this.messages.push(new chatMessage(false, `<small>MERIT TEAM:</small> Thanks!`, 'success'));
+      this.isNotRated = false;
+      this.socket.send('#stop');
+      switch (val) {
+        case 'good':
+          break;
+        case 'fine':
+          break;
+        case 'bad':
+          break;
+        default:
+          break;
+      }
     },
   },
 };

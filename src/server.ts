@@ -71,9 +71,11 @@ wss.on('connection', (ws: WebSocket) => {
     message = detectRudeWords.clean(message);
 
     if (pair && discordUser && message.length > 0) {
-      console.log(compileMessage.regularMessage(pair.get('wsUser'), message));
-
-      discordUser.send(compileMessage.regularMessage(pair.get('wsUser'), message));
+      if (message !== '#stop') {
+        discordUser.send(compileMessage.regularMessage(pair.get('wsUser'), message));
+      } else {
+        destroyConnection(compileMessage.thanksForHelp());
+      }
     } else if (!pair && message.length > 2) {
       // discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
       console.log(compileMessage.helpRequest(message, connectionID));
@@ -82,16 +84,20 @@ wss.on('connection', (ws: WebSocket) => {
     }
   });
   ws.on('close', function(connection) {
+    destroyConnection(compileMessage.pairDestroyed());
+  });
+
+  function destroyConnection(message) {
     let pair = wsService.checkPair(chatPairs, connectionID);
     let discordUser = (ws as any).discordUser;
 
     if (pair && discordUser) {
       (async () => {
         chatPairs = (await wsService.destroyPair(chatPairs, pair.discordUser)) as any[];
-        discordUser.send(compileMessage.pairDestroyed());
+        discordUser.send(message);
       })();
     }
-  });
+  }
 });
 
 discordClient.on('message', (message: any) => {
