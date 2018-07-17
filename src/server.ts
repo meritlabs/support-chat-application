@@ -73,7 +73,7 @@ wss.on('connection', (ws: WebSocket) => {
       }
     } else if (!pair && message.length > 2) {
       discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
-    } else if (DEBUG && connectionID) {
+    } else if (connectionID) {
       console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
     }
   });
@@ -116,8 +116,6 @@ discordClient.on('message', (message: any) => {
       console.log(pair);
       console.log('END___DEBUG___PAIR___');
     }
-
-    console.log(detectedMessageType);
 
     switch (detectedMessageType) {
       case messageTypes.joinToPair:
@@ -184,7 +182,7 @@ discordClient.on('message', (message: any) => {
         message.author.send(compileMessage.howToUse()); // Post to Discord user how to use message
         break;
       case messageTypes.default:
-        message.author.send(compileMessage.defaultException()); // Post to Discord user default exception
+        // message.author.send(compileMessage.defaultException()); // Post to Discord user default exception
         break;
       default:
         break;
