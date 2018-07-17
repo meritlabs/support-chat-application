@@ -77,8 +77,7 @@ wss.on('connection', (ws: WebSocket) => {
         destroyConnection(compileMessage.thanksForHelp());
       }
     } else if (!pair && message.length > 2) {
-      // discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
-      console.log(compileMessage.helpRequest(message, connectionID));
+      discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
     } else if (DEBUG && connectionID) {
       console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
     }
