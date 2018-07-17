@@ -120,6 +120,10 @@ body, html
 .messagesWindow
   .message
     width: 100%
+    font-size: 14px
+    line-height: 20px
+    small
+      font-size: 12px
     &.client
       text-align: right
       .message_innerWrap
@@ -164,12 +168,19 @@ body, html
       transform: skew(-49deg)
     .date
       color: $EBONY_CLAY
-      font-size: 12px
-      font-weight: 600
-      margin-bottom: 15px
+      font-size: 11px
+      font-weight: 500
+      margin-bottom: 4px
       opacity: .6
+      letter-spacing: -1px
+    small
+      font-weight: 600
+      margin-bottom: 5px
+      display: block
+      opacity: .7
   .countdown
     padding: 15px 0
     display: flex
     font-size: 24px
     font-weight: 600
+    color: $DODGER_BLUE

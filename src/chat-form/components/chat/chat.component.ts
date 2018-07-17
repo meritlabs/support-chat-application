@@ -51,7 +51,7 @@ export default {
         _this.messages.push(new chatMessage(false, `@${author}`, 'joined'));
         _this.isJoined = true;
       } else {
-        _this.messages.push(new chatMessage(false, `@${author}:\n ${message}`, 'regular'));
+        _this.messages.push(new chatMessage(false, `<small>@${author}:</small>${message}`, 'regular'));
       }
     };
   },
