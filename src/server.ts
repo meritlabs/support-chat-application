@@ -117,6 +117,8 @@ discordClient.on('message', (message: any) => {
       console.log('END___DEBUG___PAIR___');
     }
 
+    console.log(detectedMessageType);
+
     switch (detectedMessageType) {
       case messageTypes.joinToPair:
         let connectionID = wsService.parseConnection(_message);
@@ -180,9 +182,6 @@ discordClient.on('message', (message: any) => {
         break;
       case messageTypes.howToUse:
         message.author.send(compileMessage.howToUse()); // Post to Discord user how to use message
-        break;
-      case messageTypes.default:
-        // message.author.send(compileMessage.defaultException()); // Post to Discord user default exception
         break;
       default:
         break;
