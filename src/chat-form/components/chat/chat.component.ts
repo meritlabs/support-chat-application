@@ -9,7 +9,7 @@ export default {
   data: function() {
     return {
       messages: [],
-      socket: new WebSocket(wsService.getHost()),
+      socket: '',
       interval: '',
       countdown: 10 * 60 * 1000, // in milliseconds
       clientMessage: '',
@@ -20,6 +20,8 @@ export default {
     };
   },
   created: function() {
+    this.socket = new WebSocket(wsService.getHost());
+
     let initMessage = this.$route.query.initMessage;
     let socket = this.socket;
     let _this = this;
