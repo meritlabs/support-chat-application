@@ -12,6 +12,9 @@ import * as discordService from './services/discord.service';
 import { chatPair, wsMessage } from './common/ts/classes';
 import { messageTypes, strings } from './common/ts/const';
 
+const Filter = require('bad-words');
+const detectRudeWords = new Filter({ placeHolder: '♥' });
+
 const app = express(),
   server = http.createServer(app),
   discordClient = new Discord.Client(),
@@ -65,6 +68,8 @@ wss.on('connection', (ws: WebSocket) => {
     let pair = wsService.checkPair(chatPairs, connectionID);
     let discordUser = (ws as any).discordUser;
 
+    message = detectRudeWords.clean(message);
+
     if (pair && discordUser && message.length > 0) {
       console.log(compileMessage.regularMessage(pair.get('wsUser'), message));
 
@@ -97,7 +102,7 @@ discordClient.on('message', (message: any) => {
   }
 
   let type: string = message.channel.type;
-  let _message: string = message.content;
+  let _message: string = detectRudeWords.clean(message.content);
   let isBot = message.author.bot;
 
   if (type === 'dm' && !isBot) {
