@@ -55,6 +55,7 @@ export default {
           _this.messages.push(new chatMessage(false, `<small>@${author}:</small>${message}`, 'regular'));
         } else {
           _this.messages.push(new chatMessage(false, `<small>${author}:</small>${message}`, 'error'));
+          _this.isJoined = false;
         }
       }
     };
@@ -84,10 +85,12 @@ export default {
       this.socket.send('');
     },
     sendMessage: function(message) {
-      if (message.length > 0) {
+      if (message.length > 0 && this.isJoined) {
         this.socket.send(message);
         this.messages.push(new chatMessage(true, message, 'regular'));
         this.clientMessage = '';
+      } else {
+        this.messages.push(new chatMessage(false, `<small>ERROR:</small> Oooops, unexpected error!`, 'error'));
       }
     },
     restartApplication: function() {
