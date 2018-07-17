@@ -117,6 +117,8 @@ discordClient.on('message', (message: any) => {
       console.log('END___DEBUG___PAIR___');
     }
 
+    console.log(detectedMessageType);
+
     switch (detectedMessageType) {
       case messageTypes.joinToPair:
         let connectionID = wsService.parseConnection(_message);
