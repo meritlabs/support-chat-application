@@ -51,7 +51,11 @@ export default {
         _this.messages.push(new chatMessage(false, `@${author}`, 'joined'));
         _this.isJoined = true;
       } else {
-        _this.messages.push(new chatMessage(false, `<small>@${author}:</small>${message}`, 'regular'));
+        if (author !== 'ERROR') {
+          _this.messages.push(new chatMessage(false, `<small>@${author}:</small>${message}`, 'regular'));
+        } else {
+          _this.messages.push(new chatMessage(false, `<small>${author}:</small>${message}`, 'error'));
+        }
       }
     };
   },
@@ -74,7 +78,7 @@ export default {
       let message = `Sorry, your request session expired`;
 
       this.stopCountDown();
-      this.messages.push(new chatMessage(false, message, 'expired'));
+      this.messages.push(new chatMessage(false, message, 'error'));
     },
     keepSocketAwake: function() {
       this.socket.send('');

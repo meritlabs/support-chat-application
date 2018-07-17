@@ -51,6 +51,11 @@ export function pairDestroyed() {
   return 'Your helping process has been cancelled.  You are now free to help someone new!';
 }
 
+// Discord user disconnected
+export function disconnected() {
+  return 'Helping process has been cancelled, application disconnected!';
+}
+
 // If you are not inviting new users right now.
 export function noActiveConnections() {
   return 'You are not currently helping any users.';

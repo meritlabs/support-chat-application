@@ -160,6 +160,9 @@ discordClient.on('message', (message: any) => {
       case messageTypes.destroyPair:
         if (pair) {
           (async () => {
+            let connection = wsService.getConnection(awaitingQueue, pair.get('wsUser'));
+            let userDisconnectedMessage = JSON.stringify(new wsMessage('ERROR', compileMessage.disconnected()));
+            connection.send(userDisconnectedMessage);
             chatPairs = (await wsService.destroyPair(chatPairs, pair.discordUser)) as any[];
             message.author.send(compileMessage.pairDestroyed());
           })();
