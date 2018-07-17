@@ -1,10 +1,9 @@
 <div class="chatView">
   <div class="messagesWindow" v-chat-scroll="{always: false, smooth: true}">
-    <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient, expired: item.type === 'expired'}">
+    <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient, joined: item.type === 'joined', expired: item.type === 'expired'}">
       <div class="message_innerWrap">
         <div class="date">{{item.timestamp | getTime}}</div>
-        <div v-if="item.type === 'regular'">
-          {{item.message}}
+        <div v-if="item.type === 'regular'" v-html="item.message">
         </div>
         <div v-if="item.type === 'countdown'">
           <p>
@@ -24,7 +23,7 @@
           </p>
         </div>
         <div v-if="item.type === 'joined'">
-          {{item.message}} from Discord community, joined to help you!
+          <strong>{{item.message}}</strong> from Discord community, joined to help you!
         </div>
         <div v-if="item.type === 'expired'">
           <p>{{item.message}}</p>

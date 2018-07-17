@@ -11,7 +11,7 @@ export default {
       messages: [],
       socket: new WebSocket(wsService.getHost()),
       interval: '',
-      countdown: 15 * 60 * 1000, // in milliseconds
+      countdown: 10 * 60 * 1000, // in milliseconds
       clientMessage: '',
       initMessage: '',
       isJoined: false,
@@ -51,7 +51,7 @@ export default {
         _this.messages.push(new chatMessage(false, `@${author}`, 'joined'));
         _this.isJoined = true;
       } else {
-        _this.messages.push(new chatMessage(false, `@${author}: ${message}`, 'regular'));
+        _this.messages.push(new chatMessage(false, `@${author}:\n ${message}`, 'regular'));
       }
     };
   },

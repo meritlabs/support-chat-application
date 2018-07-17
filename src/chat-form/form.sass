@@ -124,18 +124,16 @@ body, html
       text-align: right
       .message_innerWrap
         text-align: right
-        background: $LIGHT_BLUE
-        color: $EBONY_CLAY
+        box-shadow: inset 1px 1px 1px rgba(170,170,170,0.1), 10px 10px 10px rgba(170, 170, 170, 0.24)
         &:before
           left: initial
           right: -3px
           transform: skew(49deg)
-          background: $LIGHT_BLUE
+          background: $WHITE
+    &.joined .message_innerWrap
+      color: $DODGER_BLUE
     &.expired .message_innerWrap
-      background: $SUNSET_ORANGE
-      color: $WHITE
-      &:before
-        background: $SUNSET_ORANGE
+      color: $SUNSET_ORANGE
       button
         font-size: 12px
         border: 0px
@@ -149,11 +147,11 @@ body, html
     display: inline-block
     padding: 15px 10px 20px
     border-radius: 4px
-    background: $DODGER_BLUE
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.1)
+    background: $WHITE
+    box-shadow: inset -1px 1px 1px rgba(170,170,170,0.1), -10px 10px 10px rgba(170,170,170,0.24)
     margin-bottom: 15px
     position: relative
-    color: $WHITE
+    color: $EBONY_CLAY
     &:before
       content: ""
       display: block
@@ -162,9 +160,10 @@ body, html
       bottom: 0
       width: 15px
       height: 7px
-      background: $DODGER_BLUE
+      background: $WHITE
       transform: skew(-49deg)
     .date
+      color: $EBONY_CLAY
       font-size: 12px
       font-weight: 600
       margin-bottom: 15px

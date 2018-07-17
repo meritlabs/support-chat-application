@@ -29,7 +29,7 @@ export default class chatMessage {
   type: string;
   constructor(isClient: boolean, message: string, type: string) {
     this.isClient = isClient;
-    this.message = message;
+    this.message = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
     this.type = type;
     this.timestamp = new Date();
   }
