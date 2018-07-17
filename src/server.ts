@@ -108,6 +108,8 @@ discordClient.on('message', (message: any) => {
   let isBot = message.author.bot;
 
   if (type === 'dm' && !isBot) {
+    console.log(_message);
+
     let discordUser: any = message.channel.recipient.username;
     let pair = wsService.checkPair(chatPairs, discordUser);
     let isCommand = discordService.detectCommand(_message);
