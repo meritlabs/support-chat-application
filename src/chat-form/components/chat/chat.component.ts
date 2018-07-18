@@ -59,12 +59,7 @@ export default {
         );
         _this.isJoined = true;
         _this.connectedUser = author;
-        (window as any).gtag('event', 'Connection', {
-          event_category: 'Analytic',
-          event_action: 'Connection',
-          event_label: `_${author}_at_Discord`,
-          value: 1, // Application loaded
-        });
+        this.sendRateEv(1);
       } else {
         if (author !== 'ERROR') {
           _this.messages.push(new chatMessage(false, `<small>@${author}:</small>${message}`, 'regular'));
@@ -120,6 +115,14 @@ export default {
       this.isThanksEnabled = false;
       this.messages.push(new chatMessage(false, ``, 'rateHelp'));
     },
+    sendRateEv: function(val) {
+      (window as any).gtag('event', 'Connection', {
+        event_category: 'Analytic',
+        event_action: 'Connection',
+        event_label: `_${this.connectedUser}_at_Discord`,
+        value: val, // Application loaded
+      });
+    },
     rateHelp: function(val) {
       this.messages.push(new chatMessage(false, `<small>MERIT TEAM:</small> Thanks!`, 'success'));
       this.isNotRated = false;
@@ -127,28 +130,13 @@ export default {
       this.shutDownConnection();
       switch (val) {
         case 'good':
-          (window as any).gtag('event', 'Connection', {
-            event_category: 'Analytic',
-            event_action: 'Connection',
-            event_label: `_${this.connectedUser}_at_Discord`,
-            value: 5, // Application loaded
-          });
+          this.sendRateEv(5);
           break;
         case 'fine':
-          (window as any).gtag('event', 'Connection', {
-            event_category: 'Analytic',
-            event_action: 'Connection',
-            event_label: `_${this.connectedUser}_at_Discord`,
-            value: 3, // Application loaded
-          });
+          this.sendRateEv(3);
           break;
         case 'bad':
-          (window as any).gtag('event', 'Connection', {
-            event_category: 'Analytic',
-            event_action: 'Connection',
-            event_label: `_${this.connectedUser}_at_Discord`,
-            value: 2, // Application loaded
-          });
+          this.sendRateEv(2);
           break;
         default:
           break;
