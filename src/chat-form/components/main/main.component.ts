@@ -5,8 +5,6 @@ export default {
   template: template.default,
   data: function() {
     return {
-      title: `Welcome to merit support!`,
-      description: `Ask community using our support application, enter your message below:`,
       initMessage: '',
       isMessageValid: true,
     };
