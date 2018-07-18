@@ -50,17 +50,9 @@ server.listen(PORT, () => {
 wss.on('connection', (ws: WebSocket) => {
   let connectionID = wsService.createConnectionID(fakeId++);
 
-  console.log(connectionID);
-
   (ws as any).id = connectionID;
   (ws as any).connected = false;
   awaitingQueue.push(ws);
-
-  if (DEBUG) {
-    console.log('START__DEBUG__CREATED_CONNECTION___');
-    console.log(awaitingQueue);
-    console.log('END__DEBUG__CREATED_CONNECTION___');
-  }
   ws.on('message', (message: string) => {
     let pair = wsService.checkPair(chatPairs, connectionID);
     let discordUser = (ws as any).discordUser;
@@ -75,7 +67,7 @@ wss.on('connection', (ws: WebSocket) => {
       }
     } else if (!pair && message.length > 2) {
       discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
-    } else if (connectionID) {
+    } else if (DEBUG && connectionID) {
       console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
     }
   });
@@ -97,29 +89,15 @@ wss.on('connection', (ws: WebSocket) => {
 });
 
 discordClient.on('message', (message: any) => {
-  if (DEBUG) {
-    console.log('START__DEBUG__PRESENT_CONNECTIONS___');
-    console.log(awaitingQueue);
-    console.log('END__DEBUG__PRESENT_CONNECTIONS___');
-  }
-
   let type: string = message.channel.type;
   let _message: string = detectRudeWords.clean(message.content);
   let isBot = message.author.bot;
 
   if (type === 'dm' && !isBot) {
-    console.log(_message);
-
     let discordUser: any = message.channel.recipient.username;
     let pair = wsService.checkPair(chatPairs, discordUser);
     let isCommand = discordService.detectCommand(_message);
     let detectedMessageType = discordService.detectMessageType(pair, isCommand, isBot);
-
-    if (DEBUG) {
-      console.log('START___DEBUG___PAIR___');
-      console.log(pair);
-      console.log('END___DEBUG___PAIR___');
-    }
 
     switch (detectedMessageType) {
       case messageTypes.joinToPair:
@@ -129,12 +107,6 @@ discordClient.on('message', (message: any) => {
         let isConnectionBusy;
 
         if (connection) isConnectionBusy = wsService.isConnectionBusy(chatPairs, connection.id);
-
-        if (DEBUG) {
-          console.log('START___IS_CONNECTION_BUSY___');
-          console.log(isConnectionBusy);
-          console.log('END___IS_CONNECTION_BUSY___');
-        }
 
         if (connection && !connection.connected && !isConnectionBusy) {
           connection.discordUser = message.author; //attach Discord user to the new connection pair
