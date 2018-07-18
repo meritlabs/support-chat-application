@@ -1,4 +1,5 @@
 declare const Vue: any;
+declare const window: any;
 const template = require('./chat.view.html');
 import chatMessage from '../../../common/ts/classes';
 import * as wsService from '../../../services/websocket.service';
@@ -18,6 +19,7 @@ export default {
       isJoined: false,
       isThanksEnabled: true,
       isNotRated: true,
+      connectedUser: '',
     };
   },
   created: function() {
@@ -56,6 +58,13 @@ export default {
           new chatMessage(false, `<strong>@${author}</strong> from Discord community, joined to help you!`, 'success')
         );
         _this.isJoined = true;
+        _this.connectedUser = author;
+        (window as any).gtag('event', 'Connection', {
+          event_category: 'Analytic',
+          event_action: 'Connection',
+          event_label: `_${author}_at_Discord`,
+          value: 1, // Application loaded
+        });
       } else {
         if (author !== 'ERROR') {
           _this.messages.push(new chatMessage(false, `<small>@${author}:</small>${message}`, 'regular'));
@@ -118,10 +127,28 @@ export default {
       this.shutDownConnection();
       switch (val) {
         case 'good':
+          (window as any).gtag('event', 'Connection', {
+            event_category: 'Analytic',
+            event_action: 'Connection',
+            event_label: `_${this.connectedUser}_at_Discord`,
+            value: 5, // Application loaded
+          });
           break;
         case 'fine':
+          (window as any).gtag('event', 'Connection', {
+            event_category: 'Analytic',
+            event_action: 'Connection',
+            event_label: `_${this.connectedUser}_at_Discord`,
+            value: 3, // Application loaded
+          });
           break;
         case 'bad':
+          (window as any).gtag('event', 'Connection', {
+            event_category: 'Analytic',
+            event_action: 'Connection',
+            event_label: `_${this.connectedUser}_at_Discord`,
+            value: 2, // Application loaded
+          });
           break;
         default:
           break;
