@@ -31,7 +31,7 @@ const wss = new WebSocket.Server({ server });
 //Discord bot login
 discordClient.login(BOT_TOKEN);
 
-// Serve invite application
+// Serve help application
 app.use(APP_SLUG, express.static('./dist/server/chat-form'));
 
 let fakeId: number = 0;

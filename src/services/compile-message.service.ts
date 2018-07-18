@@ -60,7 +60,7 @@ export function disconnected() {
   return 'Helping process has been cancelled, application disconnected!';
 }
 
-// If you are not inviting new users right now.
+// If you are not helping new users right now.
 export function noActiveConnections() {
   return 'You are not currently helping any users.';
 }
@@ -70,7 +70,7 @@ export function getHelp() {
   return `***MERIT HELP BOT**\n*The Merit Help Bot aims to connect new users to existing members of the community.
   \nYou can text with new user via a direct message (DM) to the BOT. You can use the following list of commands:*
   \n1) Connect to the new user with command: \`help to: #0-0000000000000@\`
-  \n2) You cannot help 2 new users at the same time. To cancel your existing he;ping process please type: \`#stop\`
+  \n2) You cannot help 2 new users at the same time. To cancel your existing helping process please type: \`#stop\`
   \n3) If you are still confused, I can tell you how it works if you type:  \`#how-it-works\``;
 }
 
@@ -85,11 +85,11 @@ export function defaultException() {
 // How to use the bot -- sent to USER.
 export function howToUse() {
   return `The Merit Help bot allows users who do not use Discord or Telegram to request an help directly from the website!
-  \nThey will fill out an application that looks like this: http://prntscr.com/jxbfs5
-  \nIf you offer to send them an help, they will receive your messages in the application chat window. 
+  \nThey will fill out an application that looks like this: https://prnt.sc/k7z09o
+  \nIf you decided to help, you will start direct chat with site user using Discord Bot like middleman. 
   \nHere is how you use the Merit Help Bot:
-  \n 1) Copy the required message to help this new user: http://prntscr.com/jxbhd3
-  \n 2) Send that message to me via direct message (DM).  Here's how: click on my username and paste the message you copied above and press enter! http://prntscr.com/jxbhli
-  \n 3) If you are the first person who responds to me, you will have the opportunity to help this new user to the Merit community.  http://prntscr.com/jxbi2t
+  \n 1) Copy the required message to help this new user: http://prntscr.com/k7z17x
+  \n 2) Send that message to me via direct message (DM).  Here's how: click on my username and paste the message you copied above and press enter! http://prntscr.com/k7z1lq
+  \n 3) If you are the first person who responds to me, you will have the opportunity to help this new user.
   \n 4) Remember, you can only be in the process of helping one new user at a time.`;
 }

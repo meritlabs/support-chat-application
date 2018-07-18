@@ -19,5 +19,4 @@ export enum commands {
 export enum strings {
   channelNotSetup = 'PLEASE SETUP CHANNELS',
   joined = 'joined',
-  inviteCode = 'invite code',
 }
