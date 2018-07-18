@@ -9,8 +9,9 @@ export default {
   data: function() {
     return {
       messages: [],
-      socket: '',
-      interval: '',
+      socket: null,
+      countdownInterval: null,
+      awakeInterval: null,
       countdown: 10 * 60 * 1000, // in milliseconds
       clientMessage: '',
       initMessage: '',
@@ -37,7 +38,7 @@ export default {
           _this.messages.push(new chatMessage(false, '', 'countdown'));
           _this.startCountDown();
         };
-        setInterval(this.keepSocketAwake, 2000);
+        this.awakeInterval = setInterval(this.keepSocketAwake, 2000);
         break;
       case 'empty':
         this.$router.replace('/');
@@ -62,16 +63,17 @@ export default {
         } else {
           _this.messages.push(new chatMessage(false, `<small>${author}:</small>${message}`, 'error'));
           _this.isJoined = false;
+          _this.shutDownConnection();
         }
       }
     };
   },
   methods: {
     startCountDown: function() {
-      this.interval = setInterval(this.updateTimer, 1000);
+      this.countdownInterval = setInterval(this.updateTimer, 1000);
     },
     stopCountDown: function() {
-      clearInterval(this.interval);
+      clearInterval(this.countdownInterval);
     },
     updateTimer: function() {
       let countdown = (this.countdown -= 1000);
@@ -89,6 +91,9 @@ export default {
     },
     keepSocketAwake: function() {
       this.socket.send('');
+    },
+    shutDownConnection: function() {
+      clearInterval(this.awakeInterval);
     },
     sendMessage: function(message) {
       if (message.length > 0 && this.isJoined) {
@@ -111,6 +116,7 @@ export default {
       this.messages.push(new chatMessage(false, `<small>MERIT TEAM:</small> Thanks!`, 'success'));
       this.isNotRated = false;
       this.socket.send('#stop');
+      this.shutDownConnection();
       switch (val) {
         case 'good':
           break;

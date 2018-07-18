@@ -2,7 +2,7 @@
   <div class="primaryTitle">
     <p>Welcome to merit support!</p>
   </div>
-  <div class="primaryDescription" v-if="description">
+  <div class="primaryDescription">
     <p>Ask community using our support application, enter your message below:</p>
   </div>
   <textarea class="initMessage" v-bind:class="{ invalid: !isMessageValid }" v-model="initMessage" placeholder="Enter your message here"></textarea>
