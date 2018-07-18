@@ -21,18 +21,17 @@ export default {
     };
   },
   created: function() {
-    this.socket = new WebSocket(wsService.getHost());
-
     let initMessage = this.$route.query.initMessage;
-    let socket = this.socket;
     let _this = this;
 
     this.$router.replace('/chat'); // remove query params
 
     switch (chatService.validateInitMessage(initMessage)) {
       case 'valid':
-        socket.onopen = function() {
-          socket.send(initMessage);
+        _this.socket = new WebSocket(wsService.getHost());
+
+        _this.socket.onopen = function() {
+          _this.socket.send(initMessage);
           _this.initMessage = initMessage;
           _this.messages.push(new chatMessage(true, initMessage, 'regular'));
           _this.messages.push(new chatMessage(false, '', 'countdown'));
@@ -47,7 +46,7 @@ export default {
         break;
     }
 
-    socket.onmessage = function(event) {
+    _this.socket.onmessage = function(event) {
       let data = JSON.parse(event.data);
       let author = data.author;
       let message = data.message;
