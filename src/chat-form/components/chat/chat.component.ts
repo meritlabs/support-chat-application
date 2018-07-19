@@ -125,6 +125,9 @@ export default {
         value: val, // Application loaded
       });
     },
+    sendTypingStatus() {
+      this.socket.send('#typing');
+    },
     rateHelp: function(val) {
       this.messages.push(new chatMessage(false, `<small>MERIT TEAM:</small> Thanks!`, 'success'));
       this.isNotRated = false;
