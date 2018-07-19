@@ -18,9 +18,7 @@ export default {
   },
   methods: {
     sendRequest: function(message) {
-      if (message.length > 0) {
-        console.log(encodeURI(message));
-
+      if (message.length > 0 && message.length < 500) {
         this.$router.push({ path: '/chat', query: { initMessage: encodeURI(message) } });
       } else {
         this.isMessageValid = false;

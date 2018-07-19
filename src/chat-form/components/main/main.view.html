@@ -5,6 +5,14 @@
   <div class="primaryDescription">
     <p>Ask community using our support application, enter your message below:</p>
   </div>
-  <textarea class="initMessage" v-bind:class="{ invalid: !isMessageValid }" v-model="initMessage" placeholder="Enter your message here"></textarea>
-  <button class="btn btn-submit" v-on:click="sendRequest(initMessage)">Ask now</button>
+  <div class="inputWrap">
+    <textarea class="initMessage" v-bind:class="{ invalid: !isMessageValid }" v-model="initMessage" placeholder="Enter your message here"></textarea>
+    <button class="btn btn-submit" v-on:click="sendRequest(initMessage)">Ask now</button>
+    <div class="description">
+      <p>
+        <i>*500 charters maximum</i>
+      </p>
+    </div>
+  </div>
+
 </div>

@@ -30,6 +30,7 @@ export default {
 
     switch (chatService.validateInitMessage(initMessage)) {
       case 'valid':
+        initMessage = decodeURI(initMessage);
         _this.socket = new WebSocket(wsService.getHost());
 
         _this.socket.onopen = function() {
@@ -99,7 +100,8 @@ export default {
       clearInterval(this.awakeInterval);
     },
     sendMessage: function(message) {
-      if (message.length > 0 && this.isJoined) {
+      if (message.length > 0 && message.length < 500 && this.isJoined) {
+        message = decodeURI(message);
         this.socket.send(message);
         this.messages.push(new chatMessage(true, message, 'regular'));
         this.clientMessage = '';
