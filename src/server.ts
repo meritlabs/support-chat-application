@@ -5,7 +5,6 @@ import * as http from 'http';
 import * as WebSocket from 'ws';
 import * as Discord from 'discord.js';
 
-import * as expressService from './services/express.service';
 import * as wsService from './services/websocket.service';
 import * as compileMessage from './services/compile-message.service';
 import * as discordService from './services/discord.service';
@@ -56,19 +55,30 @@ wss.on('connection', (ws: WebSocket) => {
   ws.on('message', (message: string) => {
     let pair = wsService.checkPair(chatPairs, connectionID);
     let discordUser = (ws as any).discordUser;
+    let activeChannel = (ws as any).channel;
 
     message = detectRudeWords.clean(message);
 
-    if (pair && discordUser && message.length > 0) {
-      if (message !== '#stop') {
+    switch (wsService.defineMessageType(pair, discordUser, message)) {
+      case 'init':
+        discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
+        break;
+      case 'regular':
         discordUser.send(compileMessage.regularMessage(pair.get('wsUser'), message));
-      } else {
+        break;
+      case 'destroyPair':
         destroyConnection(compileMessage.thanksForHelp());
-      }
-    } else if (!pair && message.length > 0) {
-      discordService.sendToChannels(discordClient, CHANNELS, compileMessage.helpRequest(message, connectionID));
-    } else if (DEBUG && connectionID) {
-      console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
+        break;
+      case 'typing':
+        activeChannel.startTyping();
+        break;
+      case 'awake':
+        if (DEBUG && connectionID) {
+          console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
+        }
+        break;
+      default:
+        break;
     }
   });
   ws.on('close', function(connection) {
@@ -109,6 +119,7 @@ discordClient.on('message', (message: any) => {
         if (connection) isConnectionBusy = wsService.isConnectionBusy(chatPairs, connection.id);
 
         if (connection && !connection.connected && !isConnectionBusy) {
+          connection.channel = message.channel;
           connection.discordUser = message.author; //attach Discord user to the new connection pair
           connection.connected = true;
 

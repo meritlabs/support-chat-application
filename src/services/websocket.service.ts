@@ -51,3 +51,26 @@ export function getHost() {
   if (/^localhost/.test(window.location.host)) host = `ws://${window.location.host}/`;
   return host;
 }
+
+//detect WS message type
+export function defineMessageType(pair, user, message) {
+  let messageType = 'awake';
+
+  if (pair && user && message.length > 0) {
+    messageType = 'regular';
+  }
+
+  if (pair && user && message.length > 0 && message === '#stop') {
+    messageType = 'destroyPair';
+  }
+
+  if (pair && user && message.length > 0 && message === '#typing') {
+    messageType = 'typing';
+  }
+
+  if (!pair && message.length > 0) {
+    messageType = 'init';
+  }
+
+  return messageType;
+}
