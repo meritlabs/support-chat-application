@@ -65,7 +65,6 @@ wss.on('connection', (ws: WebSocket) => {
         break;
       case 'regular':
         discordUser.send(compileMessage.regularMessage(pair.get('wsUser'), message));
-        activeChannel.stopTyping();
         break;
       case 'destroyPair':
         destroyConnection(compileMessage.thanksForHelp());
@@ -74,7 +73,10 @@ wss.on('connection', (ws: WebSocket) => {
         activeChannel.startTyping();
         break;
       case 'awake':
-        if (DEBUG && connectionID) {
+        if (activeChannel) {
+          activeChannel.stopTyping();
+        }
+        if (connectionID && DEBUG) {
           console.log(`DEBUG__BE__AWAKE__IM__HERE__${connectionID}`);
         }
         break;
