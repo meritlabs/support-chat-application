@@ -65,6 +65,7 @@ wss.on('connection', (ws: WebSocket) => {
         break;
       case 'regular':
         discordUser.send(compileMessage.regularMessage(pair.get('wsUser'), message));
+        activeChannel.stopTyping();
         break;
       case 'destroyPair':
         destroyConnection(compileMessage.thanksForHelp());
