@@ -11,18 +11,19 @@ import * as discordService from './services/discord.service';
 import { chatPair, wsMessage } from './common/ts/classes';
 import { messageTypes, strings } from './common/ts/const';
 
+const config = require('./common/env/dev');
 const Filter = require('bad-words');
 const detectRudeWords = new Filter({ placeHolder: '♥' });
 
 const app = express(),
   server = http.createServer(app),
   discordClient = new Discord.Client(),
-  GUILD_NAME = process.env.GUILD_NAME || '',
-  CHANNELS = process.env.CHANNELS || '',
-  BOT_TOKEN = process.env.BOT_TOKEN || '',
-  APP_SLUG = process.env.APP_SLUG || ['/get-help/'],
-  PORT = process.env.PORT || 8999,
-  DEBUG = process.env.DEBUG || false;
+  GUILD_NAME = process.env.GUILD_NAME || config.ENV.GUILD_NAME,
+  CHANNELS = process.env.CHANNELS || config.ENV.CHANNELS,
+  BOT_TOKEN = process.env.BOT_TOKEN || config.ENV.BOT_TOKEN,
+  APP_SLUG = process.env.APP_SLUG || config.ENV.APP_SLUG,
+  PORT = process.env.PORT || config.ENV.PORT,
+  DEBUG = process.env.DEBUG || config.ENV.DEBUG;
 
 //initialize the WebSocket server instance
 const wss = new WebSocket.Server({ server });
