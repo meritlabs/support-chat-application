@@ -10,10 +10,11 @@ import * as compileMessage from './services/compile-message.service';
 import * as discordService from './services/discord.service';
 import { chatPair, wsMessage } from './common/ts/classes';
 import { messageTypes, strings } from './common/ts/const';
+import whiteList from './common/ts/whiteList';
 
 const config = require('./common/env/dev');
 const Filter = require('bad-words');
-const detectRudeWords = new Filter({ placeHolder: '♥' });
+const detectRudeWords = new Filter({ placeHolder: '♥', exclude: whiteList() });
 
 const app = express(),
   server = http.createServer(app),
