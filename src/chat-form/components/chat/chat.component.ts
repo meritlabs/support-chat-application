@@ -60,7 +60,8 @@ export default {
         );
         _this.isJoined = true;
         _this.connectedUser = author;
-        this.sendRateEv(1);
+
+        _this.sendRateEv(1);
       } else {
         if (author !== 'ERROR') {
           _this.messages.push(new chatMessage(false, `<small>@${author}:</small>${message}`, 'regular'));
@@ -117,7 +118,8 @@ export default {
       this.isThanksEnabled = false;
       this.messages.push(new chatMessage(false, ``, 'rateHelp'));
     },
-    sendRateEv: function(val) {
+    sendRateEv: function() {
+      let val = 1;
       (window as any).gtag('event', 'Connection', {
         event_category: 'Analytic',
         event_action: 'Connection',
@@ -128,8 +130,21 @@ export default {
     sendTypingStatus() {
       this.socket.send('#typing');
     },
+    isRegularMessage: function(val) {
+      switch (val) {
+        case 'regular':
+          return true;
+          break;
+        case 'success':
+          return true;
+          break;
+        default:
+          return false;
+          break;
+      }
+    },
     rateHelp: function(val) {
-      this.messages.push(new chatMessage(false, `<small>MERIT TEAM:</small> Thanks!`, 'success'));
+      this.messages.push(new chatMessage(false, '', 'latest'));
       this.isNotRated = false;
       this.socket.send('#stop');
       this.shutDownConnection();
