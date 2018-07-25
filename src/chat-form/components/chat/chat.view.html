@@ -3,7 +3,7 @@
     <div v-for="item in messages" class="message" v-bind:class="{ client: item.isClient, success: item.type === 'success', error: item.type === 'error'}">
       <div class="message_innerWrap">
         <div class="date">{{item.timestamp | getTime}}</div>
-        <div v-if="item.type === 'regular' || item.type === 'success'" v-html="item.message"></div>
+        <div v-if="isRegularMessage(item.type)" v-html="item.message"></div>
         <div v-if="item.type === 'countdown'">
           <p>
             <strong>Help on the go!</strong>
@@ -43,6 +43,12 @@
               <sup>*</sup>
             </button>
           </div>
+        </div>
+        <div v-if="item.type === 'latest'">
+          <small>MERIT TEAM:</small> Thanks!
+          <br>
+          <br>
+          <button v-on:click="restartApplication()" class="btn">Still have questions?</button>
         </div>
       </div>
     </div>
