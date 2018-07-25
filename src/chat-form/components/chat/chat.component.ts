@@ -118,8 +118,7 @@ export default {
       this.isThanksEnabled = false;
       this.messages.push(new chatMessage(false, ``, 'rateHelp'));
     },
-    sendRateEv: function() {
-      let val = 1;
+    sendRateEv: function(val) {
       (window as any).gtag('event', 'Connection', {
         event_category: 'Analytic',
         event_action: 'Connection',
