@@ -86,14 +86,18 @@ wss.on('connection', (ws: WebSocket) => {
         break;
     }
   });
-  ws.on('close', function(connection) {
+  ws.on('close', function (connection) {
     destroyConnection(compileMessage.pairDestroyed());
   });
 
   function destroyConnection(message) {
     let pair = wsService.checkPair(chatPairs, connectionID);
     let discordUser = (ws as any).discordUser;
+    let activeChannel = (ws as any).channel;
 
+    if (activeChannel) {
+      activeChannel.stopTyping();
+    }
     if (pair && discordUser) {
       (async () => {
         chatPairs = (await wsService.destroyPair(chatPairs, pair.discordUser)) as any[];
